@@ -1,7 +1,21 @@
 ---
-- name: Run host
-  hosts: all
+- name: Initialization System
+  hosts: all1
   remote_user: root
 
   roles:
-    - init-system
+    #- init-system
+
+- name: Install MySQL
+  hosts: dbserver1
+  remote_user: root
+
+  roles:
+    #- mysql
+
+- name: Install Nginx
+  hosts: web
+  remote_user: root
+
+  roles:
+    - tengine
