@@ -1,0 +1,7 @@
+---
+- name: Run host
+  hosts: all
+  remote_user: root
+
+  roles:
+    - init-system

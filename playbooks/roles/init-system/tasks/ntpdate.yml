@@ -1,0 +1,9 @@
+---
+- name: Set ntp server
+  cron:
+    name: "Config NTP Server"
+    minute: "15"
+    job: /usr/sbin/ntpdate time1.aliyun.com
+
+    
+  

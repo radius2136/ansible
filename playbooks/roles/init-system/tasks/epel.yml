@@ -1,0 +1,6 @@
+---
+- name: Add aliyun epel
+  yum:
+    name: https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+    state: present
+  when: ansible_distribution == "CentOS"

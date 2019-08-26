@@ -1,0 +1,14 @@
+---
+- name: FD config
+  lineinfile:
+    path: /etc/systemd/system.conf
+    regexp: '^#DefaultLimitNOFILE='
+    line: 'DefaultLimitNOFILE=65535'
+    state: present
+
+- name: FD config
+  lineinfile:
+    path: /etc/systemd/system.conf
+    regexp: '^#DefaultLimitNPROC='
+    line: 'DefaultLimitNOFILE=65535'
+    state: present

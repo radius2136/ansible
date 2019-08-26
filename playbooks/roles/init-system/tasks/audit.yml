@@ -1,0 +1,13 @@
+---
+- name: Add system environemt variables
+  lineinfile: 
+    path: /etc/profile 
+    insertafter: EOF
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - export PROMPT_COMMAND='{ msg=$(history 1 | { read x y; echo $y; });logger "[euid=$(whoami)]":$(who am i):[`pwd`]"$msg"; }'
+    - export HISTTIMEFORMAT="%F %T `whoami` "
+
+- name: Source /etc/profile
+  shell: source /etc/profile
