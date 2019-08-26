@@ -1,4 +1,4 @@
 # ansible-playbooks
 
-Usage:
-]# ansible-playbook -i hosts site.yml
+Usage:  
+ansible-playbook -i hosts site.yml
