@@ -1,17 +1,17 @@
 ---
 - name: Initialization System
-  hosts: all1
+  hosts: owner
   remote_user: root
 
   roles:
-    #- init-system
+    - init-system
 
 - name: Install MySQL
-  hosts: dbserver1
+  hosts: dbserver
   remote_user: root
 
   roles:
-    #- mysql
+    - mysql
 
 - name: Install Nginx
   hosts: web
