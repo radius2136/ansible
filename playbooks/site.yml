@@ -1,7 +1,23 @@
 ---
-- name: Install Redis
-  hosts: redis
+- name: Initialization system
+  hosts: all
   remote_user: root
 
   roles:
-    - redis
+    - init-system
+
+- name: Install MySQL
+  hosts: dbserver
+  remote_user: root
+  
+  roles:
+    - mysql
+
+- name: Install zabbix-agent
+  hosts: zabbix
+  remote_user: root
+  vars:
+    host_ip: "{{ansible_default_ipv4['address']}}"
+
+  roles:
+    - zabbix-agent

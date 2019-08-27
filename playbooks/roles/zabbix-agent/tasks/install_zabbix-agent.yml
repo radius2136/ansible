@@ -1,0 +1,40 @@
+---
+- name: Create zabbix gropu
+  group:
+    name: zabbix
+    state: present
+- name: Cteate zabbix user
+  user:
+    name: zabbix
+    shell: /sbin/nologin
+    group: zabbix
+    append: yes
+    state: present
+
+- name: Copy package to remote host
+  copy:
+    src: ../files/zabbix-{{ zabbix_version }}.tar.gz
+    dest: /home/install
+
+- name: Install zabbix-agent
+  shell: cd /home/install && tar -xf zabbix-{{ zabbix_version }}.tar.gz && cd zabbix-{{ zabbix_version }} && ./configure --prefix=/home/zabbix --enable-agent && make install
+  
+- name: Config zabbix-agent
+  template:
+    src: zabbix_agentd.conf.j2
+    dest: /home/zabbix/etc/zabbix_agentd.conf
+    force: yes
+
+- name: Change file privilege
+  file:
+    path: /home/zabbix
+    owner: zabbix
+    group: zabbix
+    recurse: yes
+    state: directory
+
+- name: Start zabbix-agent...
+  systemd:
+    name: zabbix-agent
+    state: started
+    enabled: no

@@ -13,3 +13,8 @@
       - sysstat
       - lsof
     state: present
+
+- name: Add general pkgs directory
+  file:
+    path: /home/install
+    state: directory
