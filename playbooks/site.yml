@@ -1,21 +1,7 @@
 ---
-- name: Initialization System
-  hosts: owner
+- name: Install Redis
+  hosts: redis
   remote_user: root
 
   roles:
-    - init-system
-
-- name: Install MySQL
-  hosts: dbserver
-  remote_user: root
-
-  roles:
-    - mysql
-
-- name: Install Nginx
-  hosts: web
-  remote_user: root
-
-  roles:
-    - tengine
+    - redis
