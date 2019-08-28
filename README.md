@@ -1,6 +1,6 @@
 # ansible-playbooks
 
-Usage:  
+Usage:  （ Base CentOS 7 ）
 ansible-playbook -i hosts site.yml
 
 ```
