@@ -1,4 +1,27 @@
 ---
+- name: Initialization system
+  hosts: all
+  remote_user: root
+
+  roles:
+    - init-system
+
+- name: Install MySQL
+  hosts: dbserver
+  remote_user: root
+  
+  roles:
+    - mysql
+
+- name: Install zabbix-agent
+  hosts: zabbix
+  remote_user: root
+  vars:
+    host_ip: "{{ansible_default_ipv4['address']}}"
+
+  roles:
+    - zabbix-agent
+
 - name: Install docker-ce
   hosts: dbserver
   remote_user: root
@@ -6,4 +29,3 @@
   
   roles:
     - docker
-
