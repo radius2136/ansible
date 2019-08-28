@@ -1,0 +1,42 @@
+---
+- name: Copy docker package to remote host
+  copy:
+    src: ../files/docker-{{ docker_version }}-ce.tgz
+    dest: /home/install/docker-{{ docker_version }}-ce.tgz
+    force: no
+
+- name: Install docker-ce
+  shell: cd /home/install && tar -xf docker-{{ docker_version }}-ce.tgz -C /usr/local/
+
+- name: Change docker data directory
+  file:
+    path: /data/docker
+    recurse: yes
+    state: directory
+
+- name: Config docker registry mirrors
+  file:
+    path: /etc/docker
+    state: directory
+- name: Config docker registry mirrors
+  template:
+    src: docker-daemon.json.j2
+    dest: /etc/docker/daemon.json
+
+- name: Add system environemt variables
+  lineinfile:
+    path: /etc/profile
+    insertafter: EOF
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - export DOCKER=/usr/local/docker
+    - export PATH=$PATH:$DOCKER
+- name: Source /etc/profile
+  shell: source /etc/profile
+
+- name: Start docker-ce...
+  systemd:
+    name: docker
+    state: started
+    enabled: no
