@@ -10,6 +10,6 @@ ansible-playbook -i hosts site.yml
 2. playbook 中的设置的 host_vars
 3. registered 变量 
 
-同名变量有覆盖的问题，这里的优先级顺序是:
+同名变量会被覆盖，这里的优先级顺序是:
 registered > playbook host_vars > playbook gropu_vars/all > playbook gropu_vars/*
 ```
