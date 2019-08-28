@@ -1,0 +1,36 @@
+---
+- name: Install depend on sys packages
+  yum:
+    name: openssl-devel
+    state: present
+    
+- name: Copy keepalived package to remote host
+  copy:
+    src: ../files/keepalived-{{ keepalived_version }}.tar.gz
+    dest: /home/install/keepalived-{{ keepalived_version }}.tar.gz
+    force: no
+
+- name: Install keepalived
+  shell: cd /home/install && tar -xf keepalived-{{ keepalived_version }}.tar.gz && cd keepalived-{{ keepalived_version }} && ./configure --prefix=/usr/local/keepalived --disable-fwmark && make && make install
+
+- name: Config keepalived application
+  template:
+    src: keepalived.conf.j2
+    dest: /usr/local/keepalived/etc/keepalived.conf
+    force: no
+
+- name: Add keepalived systemd unit
+  template:
+    src: keepalived.service.j2
+    dest: /etc/systemd/system/keepalived.service
+    force: yes
+
+- name: Reload systemd unit
+  systemd:
+    daemon_reload: yes
+
+- name: Start keepalived...
+  systemd:
+    name: keepalived
+    state: started
+    enabled: no

@@ -1,18 +1,4 @@
 ---
-- name: Initialization system
-  hosts: all
-  remote_user: root
-
-  roles:
-    - init-system
-
-- name: Install MySQL
-  hosts: dbserver
-  remote_user: root
-  
-  roles:
-    - mysql
-
 - name: Install zabbix-agent
   hosts: zabbix
   remote_user: root
@@ -22,10 +8,17 @@
   roles:
     - zabbix-agent
 
-- name: Install docker-ce
+- name: Install keepalived (master||backup)
+  hosts: keepalived
+  remote_user: root
+  serial: 1
+
+  roles:
+    - keepalived
+
+- name: Install MySQL
   hosts: dbserver
   remote_user: root
-  gather_facts: no
   
   roles:
-    - docker
+    - mysql
