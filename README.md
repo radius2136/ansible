@@ -5,7 +5,7 @@ ansible-playbook -i hosts site.yml
 
 ```
 这里 需要注意的是 ansible 变量优先级的问题：
-上述文件中总共有 三处 设置了变量.
+上述文件中总共有 三处 设置了变量
 1. playbook 中的设置的 gropu_vars/all  gropu_vars/*
 2. playbook 中的设置的 host_vars
 3. registered 变量 
