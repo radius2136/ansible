@@ -1,0 +1,10 @@
+---
+- include: audit.yml
+- include: epel.yml
+- include: pkgs.yml
+- include: ntpdate.yml
+- include: firewalld.yml
+- include: selinux.yml
+- include: limits.yml
+- include: sysctl.yml
+- include: sshd.yml

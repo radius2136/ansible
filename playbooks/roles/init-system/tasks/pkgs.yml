@@ -1,0 +1,20 @@
+---
+- name: Install sys tool pkgs
+  yum:
+    name: 
+      - gcc
+      - psmisc
+      - make
+      - telnet
+      - bind-utils
+      - wget
+      - net-tools
+      - ntpdate
+      - sysstat
+      - lsof
+    state: present
+
+- name: Add general pkgs directory
+  file:
+    path: /home/install
+    state: directory

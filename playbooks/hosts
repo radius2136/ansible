@@ -1,0 +1,13 @@
+# keepalived master/backup
+[keepalived]
+10.10.3.56  # backup
+10.10.3.52  # master
+
+[dbserver]
+10.10.3.56
+
+[web]
+10.10.3.52
+
+[zabbix]
+10.10.3.52

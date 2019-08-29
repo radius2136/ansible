@@ -1,0 +1,56 @@
+- name: Depend on system packages
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - numactl
+    - gcc
+    - make
+    - gcc-c++
+    - libaio
+
+- name: Create storeage dir
+  file:
+    path: /data
+    state: directory
+
+- name: Create mysql group
+  group:
+    name: mysql
+    state: present
+- name: Create mysql user
+  user:
+    name: mysql
+    shell: /sbin/nologin
+    home: /data/mysql
+    groups: mysql
+    append: yes
+    state: present
+
+- name: Create mysql base_dir
+  file:
+    path: '/data/mysql/mysql3306/{{ item }}'
+    owner: mysql
+    group: mysql
+    recurse: yes
+    state: directory
+  with_items:
+    - data
+    - logs
+    - tmp
+    - var
+
+- name: Copy mysql.tar.gz to remote host
+  copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    force: no
+  with_items:
+    - { src: '../files/mysql-{{ mysql_version }}-linux-glibc2.12-x86_64.tar.gz', dest: '/usr/local/mysql-{{ mysql_version }}-linux-glibc2.12-x86_64.tar.gz' }
+    - { src: '../templates/my.cnf.j2', dest: '/data/mysql/mysql3306/my.cnf' }
+
+- name: Initialize mysql
+  shell: cd /usr/local && tar -xf mysql-{{ mysql_version }}-linux-glibc2.12-x86_64.tar.gz && ln -s mysql-{{ mysql_version }}-linux-glibc2.12-x86_64 mysql && mysql/bin/mysqld --defaults-file=/etc/my.cnf --user=mysql --initialize-insecure
+  register: shell_result
+  failed_when: "'FAILED' in shell_result"

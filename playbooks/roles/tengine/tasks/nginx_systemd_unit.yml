@@ -1,0 +1,9 @@
+---
+- name: Create nginx systemd unit
+  template:
+    src: nginx.service.j2
+    dest: /etc/systemd/system/nginx.service 
+    force: no
+- name: Reload systemd unit
+  systemd:
+    daemon_reload: yes

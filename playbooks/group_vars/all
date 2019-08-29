@@ -1,0 +1,6 @@
+---
+zabbix_version: 3.0.28
+zabbix_server: 192.168.2.23
+hostmetadata: os-linux
+
+docker_version: 18.03.1

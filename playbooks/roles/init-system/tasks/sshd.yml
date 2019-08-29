@@ -1,0 +1,5 @@
+---
+- name: Config sshd service
+  shell: sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config && sed -i 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
+  notify:
+    - restart sshd

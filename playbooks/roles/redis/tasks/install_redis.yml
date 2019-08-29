@@ -1,0 +1,30 @@
+---
+- name: Create redis directory
+  file:
+    path: '/data/redis/redis{{ redis_port }}/{{ item }}'
+    recurse: yes
+    state: directory
+  with_items:
+    - data
+    - logs
+    - tmp
+    - var
+
+- name: Copy redis-{{ redis_version }}.tar.gz to remote host
+  copy: 
+    src: ../files/redis-{{ redis_version }}.tar.gz
+    dest: /opt/redis-{{ redis_version }}.tar.gz
+    force: no
+
+- name: Install Redis
+  shell: cd /opt/ && tar -xf redis-{{ redis_version }}.tar.gz && cd redis-{{ redis_version }} && make
+  register: shell_result
+  failed_when: "'FAILED' in shell_result "
+
+- name: Config redis-server
+  template:
+    src: redis.conf.j2
+    dest: /data/redis/redis{{ redis_port }}/redis.conf
+
+- name: Start redis-server
+  command: /opt/redis-{{ redis_version }}/src/redis-server /data/redis/redis{{ redis_port }}/redis.conf

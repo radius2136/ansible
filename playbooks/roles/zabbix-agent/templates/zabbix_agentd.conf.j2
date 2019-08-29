@@ -1,0 +1,11 @@
+PidFile=/home/zabbix/zabbix_agentd.pid 
+LogFile=/home/zabbix/zabbix_agentd.log
+LogFileSize=0
+Server={{ zabbix_server }}
+StartAgents=3
+ServerActive={{ zabbix_server }}:10051
+Hostname={{ host_ip }}
+HostMetadata={{ hostmetadata }}
+Timeout=30
+Include=/home/zabbix/etc/zabbix_agentd.conf.d/
+UnsafeUserParameters=1
