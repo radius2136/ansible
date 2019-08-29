@@ -1,0 +1,45 @@
+---
+- name: Create haproxy group
+  group:
+    name: haproxy
+    gid: 601
+    state: present
+
+- name: Create haproxy user
+  user:
+    name: haproxy
+    uid: 601
+    shell: /sbin/nologin
+    create_home: no
+    groups: haproxy
+    append: yes
+    state: present
+    
+- name: Copy haproxy.tar.gz to remote host
+  copy:
+    src: ../files/haproxy-{{ haproxy_version }}.tar.gz
+    dest: /home/install/haproxy-{{ haproxy_version }}.tar.gz
+    force: no
+
+- name: Install haproxy
+  shell: cd /home/install && tar -xf haproxy-{{ haproxy_version }}.tar.gz && cd haproxy-{{ haproxy_version }} && make TARGET=linux26 PREFIX=/usr/local/haproxy && make install PREFIX=/usr/local/haproxy && cp haproxy-systemd-wrapper /usr/local/haproxy/sbin
+  register: shell_result
+  failed_when: "'File exists' in shell_result"
+
+- name: Config haproxy.cfg
+  template:
+    src: haproxy.cfg.j2
+    dest: /usr/local/haproxy/haproxy.cfg
+
+- name: Change kernel parameter
+  sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: "1"
+    state: present
+    reload: yes
+
+- name: Start haproxy...
+  systemd:
+    name: haproxy
+    state: started
+    enabled: no

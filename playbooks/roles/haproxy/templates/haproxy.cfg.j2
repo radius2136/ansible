@@ -1,0 +1,38 @@
+global
+maxconn 100000
+chroot /usr/local/haproxy
+uid 601  
+gid 601
+daemon
+nbproc 3 
+pidfile /run/haproxy.pid 
+log 127.0.0.1 local3 info
+
+defaults
+option http-keep-alive
+maxconn 200000
+mode http
+timeout connect 5000ms
+timeout client  50000ms
+timeout server 50000ms
+
+listen stats
+mode http
+bind 0.0.0.0:8888
+stats enable
+stats uri     /ha-status 
+stats auth    haproxy:123456
+
+frontend www.example.com
+bind 10.10.3.99:80
+mode http
+option httplog
+log global
+    default_backend www
+
+backend www
+option forwardfor header X-REAL-IP
+option httpchk HEAD / HTTP/1.0
+balance source
+server web01  10.10.3.52:8080 check inter 2000 rise 30 fall 15
+server web02  10.10.3.55:8080 check inter 2000 rise 30 fall 15
