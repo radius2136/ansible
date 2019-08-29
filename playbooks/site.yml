@@ -11,10 +11,11 @@
 - name: Install keepalived (master||backup)
   hosts: keepalived
   remote_user: root
-  serial: 1
+  # serial: 1
 
   roles:
     - keepalived
+    - dnsmasq
 
 - name: Install MySQL
   hosts: dbserver

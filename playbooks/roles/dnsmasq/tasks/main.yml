@@ -1,0 +1,19 @@
+---
+- name: Install dnsmasq
+  yum: name=dnsmasq state=present
+
+- name: Config dnsmasq
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    force: yes
+  with_items:
+    - { src: 'dnsmasq.conf.j2', dest: '/etc/dnsmasq.conf' }
+    - { src: 'dnsmasq.resolv.conf.j2', dest: '/etc/dnsmasq.resolv.conf' }
+
+- name: Start dnsmasq server
+  systemd:
+    name: dnsmasq
+    state: started
+    enabled: no 
+
