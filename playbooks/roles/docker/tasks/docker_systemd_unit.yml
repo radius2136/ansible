@@ -1,8 +1,0 @@
-- name: Create docker-ce systemd unit
-  template:
-    src: docker.service.j2
-    dest: /etc/systemd/system/docker.service
-    force: no
-- name: Reload systemd unit
-  systemd:
-    daemon_reload: yes

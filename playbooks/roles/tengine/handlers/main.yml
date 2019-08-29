@@ -1,5 +1,0 @@
----
-- name: Reload nginx
-  shell: /usr/local/nginx/sbin/nginx -t && systemctl reload nginx
-  register: shell_result
-  failed_when: "'FAILED' in shell_result"

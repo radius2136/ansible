@@ -1,4 +1,0 @@
----
-- include: nginx_systemd_unit.yml
-- include: install_nginx.yml
-- include: logrotate_nginx_logs.yml

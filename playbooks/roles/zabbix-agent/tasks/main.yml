@@ -1,3 +1,0 @@
----
-- include: zabbix-agent_systemd_unit.yml
-- include: install_zabbix-agent.yml
