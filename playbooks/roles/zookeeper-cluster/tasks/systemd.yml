@@ -1,0 +1,10 @@
+---
+- name: Add zookeeper systemd unit
+  template:
+    src: zookeeper.service.j2
+    dest: /etc/systemd/system/zookeeper.service
+    force: yes
+
+- name: Reload systemd unit
+  systemd:
+    daemon_reload: yes

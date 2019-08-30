@@ -4,3 +4,6 @@ hostname: bj.gh-a08.example.com
 # keepalived variables
 keepalived_role: BACKUP
 priority_id: 50
+
+# zookeeper cluster variables
+myid: 2

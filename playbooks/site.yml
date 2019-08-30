@@ -11,15 +11,19 @@
 - name: Install keepalived (master||backup)
   hosts: keepalived
   remote_user: root
-  # serial: 1
-
+  serial: 1
+  
   roles:
     - keepalived
     - dnsmasq
 
-- name: Install MySQL
-  hosts: dbserver
+- name: Deploy zookeeper cluster
+  hosts: zookeeper_cluster
   remote_user: root
-  
+  gather_facts: no
+
+  # tasks:
+  # - include: roles/common/tasks/jdk.yml
+
   roles:
-    - mysql
+    - zookeeper-cluster 

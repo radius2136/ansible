@@ -5,3 +5,6 @@ hostname: bj.gh-a08.example.com
 # keepalived variables
 keepalived_role: MASTER
 priority_id: 100
+
+# zookeeper cluster variables
+myid: 3

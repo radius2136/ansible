@@ -1,0 +1,4 @@
+---
+- include: roles/common/tasks/jdk.yml
+- include: systemd.yml
+- include: install.yml

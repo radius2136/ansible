@@ -1,0 +1,23 @@
+---
+- name: Copy zookeeper.tar.gz to remote host
+  copy:
+    src: ../files/apache-zookeeper-{{ zk_version }}.tar.gz
+    dest: /home/install/apache-zookeeper-{{ zk_version }}.tar.gz
+    force: no
+
+- name: Install zookeeper
+  shell: cd /usr/local && rm -rf zookeeper;mkdir zookeeper && tar -xf /home/install/apache-zookeeper-{{ zk_version }}.tar.gz -C zookeeper --strip-components 1 && cd zookeeper && mkdir data logs && cd data;echo {{ myid }} >myid
+  register: shell_result
+  failed_when: "'FAILED' in shell_result"
+
+- name: Config zookeeper
+  template:
+    src: zoo.cfg.j2
+    dest: /usr/local/zookeeper/conf/zoo.cfg
+    force: yes
+
+- name: Start zookeeper {{ myid }}
+  systemd:
+    name: zookeeper
+    state: started
+    enabled: no

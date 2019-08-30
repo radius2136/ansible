@@ -1,0 +1,22 @@
+---
+# nodejs
+- name: Copy node.tar.gz to remote host 
+  copy:
+    src: ../files/node-{{ nodejs_version }}-linux-x64.tar.xz
+    dest: /home/install/node-{{ nodejs_version }}-linux-x64.tar.xz
+    force: no
+
+- name: Deploy nodejs environment
+  shell: cd /opt && rm -rf node;mkdir node  && /home/install/node-{{ nodejs_version }}-linux-x64.tar.xz -C node --strip-components 1
+
+- name: Add system environemt variables
+  lineinfile:
+    path: /etc/profile
+    insertafter: EOF
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - export NODE=/opt/node
+    - export PATH=$PATH:$NODE/bin
+- name: Source /etc/profile
+  shell: source /etc/profile
