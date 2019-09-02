@@ -1,1 +1,6 @@
-ss
+host_ip: "{{ ansible_default_ipv4['address'] }}"
+hostname: bj.gh-a08.example.com
+
+# keepalived variables
+keepalived_role: BACKUP
+priority_id: 50
