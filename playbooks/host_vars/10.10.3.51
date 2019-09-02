@@ -4,3 +4,6 @@ hostname: bj.gh-a08.a.example.com
 
 # zookeeper cluster variables
 myid: 1
+
+# elastic cluster variables
+node_name: es-node01

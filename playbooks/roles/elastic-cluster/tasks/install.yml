@@ -1,0 +1,50 @@
+---
+- name: Create elasticsearch group
+  group:
+    name: elasticsearch
+    state: present
+- name: Create elasticsearch user
+  user:
+    name: elasticsearch
+    shell: /sbin/nologin
+    state: present
+    create_home: no
+
+- name: Update /etc/security/limits.conf
+  lineinfile:
+    path: /etc/security/limits.conf
+    insertafter: EOF
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - '* soft nofile 65536'
+    - '* hard nofile 65536'
+
+- name: Copy package to remote host
+  copy:
+    src: ../files/elasticsearch-{{ es_version }}.tar.gz
+    dest: /home/install/elasticsearch-{{ es_version }}.tar.gz
+    force: no
+
+- name: Deploy elastic cluster
+  shell: cd /usr/local && tar -xf /home/install/elasticsearch-{{ es_version }}.tar.gz -C ./ && mv elasticsearch-{{ es_version }} elasticsearch
+
+- name: Config elastic node
+  template:
+    src: elasticsearch.yml.j2
+    dest: /usr/local/elasticsearch/config/elasticsearch.yml
+    force: yes 
+
+- name: Change file privileges
+  file:
+    path: /usr/local/elasticsearch
+    owner: elasticsearch
+    group: elasticsearch
+    recurse: yes
+    state: directory
+
+- name: Start elasticsearch...
+  systemd:
+    name: elasticsearch
+    state: started
+    enabled: no

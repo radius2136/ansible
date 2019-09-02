@@ -13,3 +13,6 @@ server_id: 52{{ mysql_port }}
 
 # redis master
 redis_role: master
+
+# elastic cluster variables
+node_name: es-node02

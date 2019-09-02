@@ -21,11 +21,9 @@
   hosts: zookeeper_cluster
   remote_user: root
   gather_facts: no
-
-  # tasks:
-  #   - include: roles/common/tasks/jdk.yml
-
-  roles:
+# tasks:
+#   - include: roles/common/tasks/jdk.yml
+roles:
     - zookeeper-cluster 
   
 - name: Redis master && slave
@@ -35,3 +33,11 @@
   
   roles:
     - redis
+
+- name: Deploy elastic cluster
+  hosts: elastic_cluster
+  gather_facts: no
+  remote_user: root
+
+  roles:
+    - elastic-cluster 

@@ -14,3 +14,6 @@ server_id: 56{{ mysql_port }}
 
 # redis slave
 redis_role: slave
+
+# elastic cluster variables
+node_name: es-node03

@@ -1,0 +1,5 @@
+---
+#- include: roles/common/tasks/jdk.yml
+#- include: roles/system-init/tasks/sysctl.yml
+- include: systemd.yml
+#- include: install.yml 

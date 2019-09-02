@@ -5,10 +5,24 @@
     name: net.ipv4.ip_forward
     value: "1"
     state: present
-- name: Forbidden swap
+- name: Fs.file-max
+  sysctl:
+    sysctl_file: /etc/sysctl.conf
+    name: fs.file-max
+    value: "2000000"
+    state: present
+- name: Vm.max_map_count
+  tags: es
+  sysctl:
+    sysctl_file: /etc/sysctl.conf
+    name: vm.max_map_count
+    value: "262144"
+    state: present
+- name: Vm.swappiness
+  tags: es
   sysctl:
     sysctl_file: /etc/sysctl.conf
     name: vm.swappiness
-    value: "0"
+    value: "1"
     state: present
     reload: yes
