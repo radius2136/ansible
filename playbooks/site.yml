@@ -1,43 +1,62 @@
 ---
-- name: Install zabbix-agent
-  hosts: zabbix
+- name: system initialization
+  hosts: all
   remote_user: root
-  vars:
-    host_ip: "{{ansible_default_ipv4['address']}}"
-
   roles:
-    - zabbix-agent
-
-- name: Install keepalived (master||backup)
-  hosts: keepalived
+    - system-init
+    
+- name: HAProxy Load Balance
+  hosts: lb
+  remote_user: root
+  roles:
+    - haproxy
+    - tengine
+    - dnsmasq
+  
+- name: Deploy keepalived master && backup
+  hosts: lb
   remote_user: root
   serial: 1
-  
   roles:
     - keepalived
-    - dnsmasq
-
+    
+- name: Config web application environments
+  hosts: web
+  remote_user: root
+  tasks:
+    - include: roles/common/tasks/jdk.yml
+ 
 - name: Deploy zookeeper cluster
   hosts: zookeeper_cluster
   remote_user: root
   gather_facts: no
-# tasks:
-#   - include: roles/common/tasks/jdk.yml
-roles:
+  roles:
     - zookeeper-cluster 
   
-- name: Redis master && slave
-  hosts: redis
-  remote_user: root
-  serial: 1
-  
-  roles:
-    - redis
-
 - name: Deploy elastic cluster
   hosts: elastic_cluster
   gather_facts: no
   remote_user: root
-
   roles:
     - elastic-cluster 
+
+- name: Redis master && slave
+  hosts: redis
+  remote_user: root
+  serial: 1
+  roles:
+    - redis
+- name: MySQL master && slave
+  hosts: redis
+  remote_user: root
+  serial: 1
+  roles:
+    - mysql
+ 
+ - name: Deploy zabbix-agent monitor
+   hosts: all
+  remote_user: root
+  vars:
+    host_ip: "{{ansible_default_ipv4['address']}}"
+  roles:
+    - zabbix-agent
