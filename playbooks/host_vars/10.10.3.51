@@ -2,8 +2,8 @@
 host_ip: "{{ ansible_default_ipv4['address'] }}"
 hostname: bj.gh-a08.a.example.com
 
-# zookeeper cluster variables
-myid: 1
+# mysql master
+server_id: 51{{ mysql_port }}
 
-# elastic cluster variables
-node_name: es-node01
+# redis slave
+redis_role: slave
