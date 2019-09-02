@@ -1,0 +1,7 @@
+---
+tengine_version: 2.2.1
+
+haproxy_version: 1.7.11
+
+keepalived_version: 2.0.1
+route_id: Nginx
