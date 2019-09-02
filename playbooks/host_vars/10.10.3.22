@@ -1,0 +1,9 @@
+---
+host_ip: "{{ ansible_default_ipv4['address'] }}"
+hostname: bj.gh-a08.a.example.com
+
+# zookeeper cluster variables
+myid: 2
+
+# elastic cluster variables
+node_name: es-node02
