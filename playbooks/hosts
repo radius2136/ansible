@@ -1,6 +1,6 @@
-[keepalived]
-10.10.3.56  # backup
+[redis]
 10.10.3.52  # master
+10.10.3.56  # slave
 
 [dbserver]
 10.10.3.56

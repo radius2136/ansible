@@ -1,2 +1,37 @@
 ---
-- include: install_redis.yml 
+- name: Create redis directory
+  file:
+    path: '/data/redis/redis{{ redis_port }}/{{ item }}'
+    recurse: yes
+    state: directory
+  with_items:
+    - data
+    - logs
+    - tmp
+    - var
+
+- name: Copy redis-{{ redis_version }}.tar.gz to remote host
+  copy: 
+    src: ../files/redis-{{ redis_version }}.tar.gz
+    dest: /home/install/redis-{{ redis_version }}.tar.gz
+    force: no
+
+- name: Install Redis
+  shell: cd /usr/local && tar -xf /home/install/redis-{{ redis_version }}.tar.gz -C ./ && cd redis-{{ redis_version }} && make
+  register: shell_result
+  failed_when: "'FAILED' in shell_result "
+
+- name: Config redis-master
+  template:
+    src: redis.conf.j2
+    dest: /data/redis/redis{{ redis_port }}/redis.conf
+  when: redis_role == "master"
+- name: Config redis-slave
+  template:
+    src: redis.conf_slave.j2
+    dest: /data/redis/redis{{ redis_port }}/redis.conf
+  when: redis_role == "slave"
+    
+
+- name: Start redis-server
+  command: /usr/local/redis-{{ redis_version }}/src/redis-server /data/redis/redis{{ redis_port }}/redis.conf

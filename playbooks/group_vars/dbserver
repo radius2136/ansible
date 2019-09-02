@@ -1,3 +1,4 @@
 ---
 # Variables listed here are applicable to all host groups
 mysql_version: 5.7.20 
+mysql_port: 3306

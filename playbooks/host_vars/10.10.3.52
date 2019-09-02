@@ -7,3 +7,9 @@ priority_id: 50
 
 # zookeeper cluster variables
 myid: 2
+
+# mysql slave
+server_id: 52{{ mysql_port }}
+
+# redis master
+redis_role: master

@@ -2,3 +2,5 @@
 redis_version: 5.0.5
 redis_port: 6379
 redis_password: 123456
+
+masterip: 10.10.3.52

@@ -1,6 +1,6 @@
 [client]
-port            = 3306
-socket          = /data/mysql/mysql3306/tmp/mysql.sock
+port            = {{ mysql_port }}
+socket          = /data/mysql/mysql{{ mysql_port }}/tmp/mysql.sock
 default-character-set = utf8mb4
 
 [mysql]
@@ -16,13 +16,13 @@ mysqladmin = /usr/local/mysql/bin/mysqladmin
 #misc
 user = mysql
 basedir = /usr/local/mysql
-datadir = /data/mysql/mysql3306/data
-port = 3306
-socket = /data/mysql/mysql3306/var/mysql.sock
+datadir = /data/mysql/mysql{{ mysql_port }}/data
+port = {{ mysql_port }}
+socket = /data/mysql/mysql{{ mysql_port }}/var/mysql.sock
 event_scheduler = 0
 sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
 
-tmpdir = /data/mysql/mysql3306/tmp
+tmpdir = /data/mysql/mysql{{ mysql_port }}/tmp
 #timeout
 interactive_timeout = 300
 wait_timeout = 300
@@ -54,8 +54,8 @@ log-slow-slave-statements = 1
 #binlog
 #binlog_format = STATEMENT
 binlog_format = row
-server-id = 23306
-log-bin = /data/mysql/mysql3306/logs/mysql-bin
+server-id = {{ server_id }}
+log-bin = /data/mysql/mysql{{ mysql_port }}/logs/mysql-bin
 binlog_cache_size = 4M
 max_binlog_size = 256M
 max_binlog_cache_size = 1M
