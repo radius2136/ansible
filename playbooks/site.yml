@@ -14,7 +14,7 @@
     - dnsmasq
   
 - name: Deploy keepalived master && backup
-  hosts: lb
+  hosts: keeoalived
   remote_user: root
   serial: 1
   roles:
