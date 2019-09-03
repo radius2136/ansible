@@ -1,6 +1,7 @@
 upstream example.com{
-         server 192.168.10.30:3006;
-         server 192.168.10.40:3006;
+         server 10.10.3.21:3006;
+         server 10.10.3.22:3006;
+         server 10.10.3.23:3006
          check interval=3000 rise=2 fall=5 timeout=1000 type=http;
          }
 
