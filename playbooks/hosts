@@ -1,7 +1,11 @@
 # load balance
 [lb]
-10.10.3.10
 10.10.3.11
+10.10.3.12
+
+[keepalived]
+10.10.3.11
+10.10.3.12
 
 # application environments eg: jdk node docker
 [web]
