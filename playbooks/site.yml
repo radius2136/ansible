@@ -5,7 +5,7 @@
   roles:
     - system-init
     
-- name: HAProxy Load Balance
+- name: Load Balance
   hosts: lb
   remote_user: root
   roles:
