@@ -1,7 +1,7 @@
 # ansible-playbooks
 ##### 网站经典架构
 ![image](https://github.com/songhe2136/ansible/blob/master/pic/pic.png)  
-Usage:  （ Base CentOS 7 ）  
+Usage:  （ Base CentOS 7 ,ansible 2.10）  
 ```
 ansible-playbook -i hosts site.yml
 ```
