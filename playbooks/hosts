@@ -4,8 +4,8 @@
 10.10.3.12
 
 [keepalived]
-10.10.3.11 # master
-10.10.3.12 # backup
+10.10.3.11  # master
+10.10.3.12  # backup
 
 # application environments eg: jdk node docker
 [web]
