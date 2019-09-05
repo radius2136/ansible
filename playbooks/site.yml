@@ -55,8 +55,8 @@
  
  - name: Deploy zabbix-agent monitor
    hosts: all
-  remote_user: root
-  vars:
-    host_ip: "{{ansible_default_ipv4['address']}}"
-  roles:
-    - zabbix-agent
+   remote_user: root
+   vars:
+     host_ip: "{{ansible_default_ipv4['address']}}"
+   roles:
+     - zabbix-agent
