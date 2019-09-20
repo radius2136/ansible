@@ -48,8 +48,13 @@
     force: no
   with_items:
     - { src: '../files/mysql-{{ mysql_version }}-linux-glibc2.12-x86_64.tar.gz', dest: '/usr/local/mysql-{{ mysql_version }}-linux-glibc2.12-x86_64.tar.gz' }
-    - { src: '../templates/my.cnf.j2', dest: '/data/mysql/mysql3306/my.cnf' }
 
+- name: Config mysql
+  template:
+    src: my.cnf.j2
+    dest: /data/mysql/mysql{{ mysql_port }}/my.cnf
+    force: yes
+    
 - name: Initialize mysql
   shell: cd /usr/local && tar -xf mysql-{{ mysql_version }}-linux-glibc2.12-x86_64.tar.gz && ln -s mysql-{{ mysql_version }}-linux-glibc2.12-x86_64 mysql && mysql/bin/mysqld --defaults-file=/etc/my.cnf --user=mysql --initialize-insecure
   register: shell_result
